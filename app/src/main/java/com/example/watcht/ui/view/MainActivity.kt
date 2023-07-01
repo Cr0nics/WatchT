@@ -1,4 +1,4 @@
-package com.example.watcht.ui
+package com.example.watcht.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
