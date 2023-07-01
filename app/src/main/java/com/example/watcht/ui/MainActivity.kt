@@ -1,7 +1,8 @@
-package com.example.watcht
+package com.example.watcht.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.watcht.R
 
 class MainActivity : AppCompatActivity() {
 

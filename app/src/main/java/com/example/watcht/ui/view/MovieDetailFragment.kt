@@ -1,4 +1,4 @@
-package com.example.watcht.ui
+package com.example.watcht.ui.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,26 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.watcht.R
-import com.example.watcht.ui.viewmodel.MovieListViewModel
+import com.example.watcht.ui.viewmodel.MovieDetailViewModel
 
-class MovieListFragment : Fragment() {
+class MovieDetailFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MovieListFragment()
+        fun newInstance() = MovieDetailFragment()
     }
 
-    private lateinit var viewModel: MovieListViewModel
+    private lateinit var viewModel: MovieDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MovieListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
