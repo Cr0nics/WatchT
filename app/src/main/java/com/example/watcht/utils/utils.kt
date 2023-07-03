@@ -1,4 +1,4 @@
-package com.example.utils
+package com.example.watcht.utils
 
 object utils {
     const val API_KEY = "bfad11b3d8bcadf18965853619db810b"
