@@ -22,6 +22,11 @@ class PopularMoviesAdapter @Inject constructor(
 
     private lateinit var binding: MovieItemBinding
     private lateinit var context: Context
+    private lateinit var onClickItem: ((PopularMovieListResponse.Result) -> Unit)
+
+    fun setOnClickItemListener(listener: (PopularMovieListResponse.Result) -> Unit) {
+        onClickItem = listener
+    }
 
 
     override fun onCreateViewHolder(
@@ -65,7 +70,7 @@ class PopularMoviesAdapter @Inject constructor(
                 }
 
             }
-            itemView.setOnClickListener { Log.i("clicao","clicao") }
+            itemView.setOnClickListener { onClickItem(item) }
         }
 
     }
@@ -86,7 +91,6 @@ class PopularMoviesAdapter @Inject constructor(
         }
 
     }
-
 
     val differ = AsyncListDiffer(this, differCallback)
 

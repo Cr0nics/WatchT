@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.watcht.R
 import com.example.watcht.core.modelResponse.PopularMovieListResponse
 import com.example.watcht.data.ApiRepository
 import com.example.watcht.databinding.FragmentMovieListBinding
+import com.example.watcht.ui.view.Details.MovieDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Response
@@ -56,6 +59,9 @@ class MovieListFragment : Fragment() {
                     progressBar.visibility = View.GONE
                     when (response.code()) {
                         200 -> {
+                            moviesAdapter.setOnClickItemListener {
+                                navigateToDetail(it)
+                            }
                             response.body().let { itBody ->
                                 if (itBody?.results!!.isNotEmpty()) {
                                     moviesAdapter.differ.submitList(itBody.results)
@@ -89,6 +95,15 @@ class MovieListFragment : Fragment() {
             })
         }
 
+
+    }
+    private fun navigateToDetail(item: PopularMovieListResponse.Result){
+
+        val bundle = Bundle()
+        bundle.putString("id", item.id.toString())
+        val movieDetailFragment = MovieDetailFragment()
+        movieDetailFragment.arguments = bundle
+        findNavController().navigate(R.id.action_movieListFragment_to_movieDetailFragment, bundle)
 
     }
 
