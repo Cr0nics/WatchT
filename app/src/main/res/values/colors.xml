@@ -15,5 +15,9 @@
     <color name="text">#a19f95</color>
     <color name="detail">#5e4d45</color>
 
+    <color name="txtColorOne">#E8DFCA</color>
+    <color name="txtColorTitle">#F5EFE6</color>
+    <color name="iconColor">#2B4865</color>
+
 
 </resources>
