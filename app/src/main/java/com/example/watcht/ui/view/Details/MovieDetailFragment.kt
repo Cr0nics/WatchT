@@ -43,16 +43,37 @@ class MovieDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+
         val id: String = (requireArguments().getString("id")).toString()
-        binding.prgBarMovies.visibility = View.GONE
-        binding.imgMovie.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                id,
-                Toast.LENGTH_SHORT
-            ).show()
+        viewModel.getDetails(id.toInt())
+
+        binding.apply {
+            prgBarMovies.visibility = View.VISIBLE
+            viewModel.movieDetailState.observe(viewLifecycleOwner) { detailState ->
+
+                when(detailState){
+
+                    is DetailState.LoadingMovieDetails -> {
+
+                    }
+                    is DetailState.SuccessMovieDetails -> {
+
+                    }
+                    is DetailState.ErrorMovieDetails -> {
+
+                    }
+
+
+
+                }
+
+
+            }
+
         }
+
 
         /*
 
@@ -111,17 +132,7 @@ class MovieDetailFragment : Fragment() {
 
     }
 
-    fun show(id: String?) {
-        lateinit var x: String
 
-        if (id.isNullOrEmpty()) {
-            x = ("showdown")
-        } else {
-            x = ("showup $id")
-        }
-
-        Toast.makeText(requireContext(), x, Toast.LENGTH_SHORT).show()
-    }
 
 
     companion object {

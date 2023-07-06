@@ -67,8 +67,6 @@ class MovieListFragment : Fragment() {
                         layoutManager = LinearLayoutManager(requireContext())
                         adapter = moviesAdapter
                     }
-
-
                 }
                 is DataState.Error -> {
                     binding.progressBar.visibility = View.GONE
@@ -77,52 +75,6 @@ class MovieListFragment : Fragment() {
             }
 
         }
-
-        /*
-        repository.getPopularMovies(1).enqueue(object :
-            retrofit2.Callback<PopularMovieListResponse> {
-            override fun onResponse(
-                call: Call<PopularMovieListResponse>,
-                response: Response<PopularMovieListResponse>
-            ) {
-                progressBar.visibility = View.GONE
-                when (response.code()) {
-                    200 -> {
-                        moviesAdapter.setOnClickItemListener {
-                            navigateToDetail(it)
-                        }
-                        response.body().let { itBody ->
-                            if (itBody?.results!!.isNotEmpty()) {
-                                moviesAdapter.differ.submitList(itBody.results)
-                            }
-                            recViewPopularMovies.apply {
-                                layoutManager = LinearLayoutManager(requireContext())
-                                adapter = moviesAdapter
-                            }
-
-                        }
-                    }
-                    400 -> {
-                        Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
-                        progressBar.visibility = View.GONE
-
-                    }
-                    401 -> {
-                        Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
-                        progressBar.visibility = View.GONE
-
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<PopularMovieListResponse>, t: Throwable) {
-                progressBar.visibility = View.GONE
-                Toast.makeText(requireContext(), "OnFailure", Toast.LENGTH_SHORT).show()
-
-            }
-
-        }) */
-
 
     }
 
