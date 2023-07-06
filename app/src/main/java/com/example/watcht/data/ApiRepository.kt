@@ -1,9 +1,10 @@
 package com.example.watcht.data
 
 import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
-@ActivityScoped
+@ViewModelScoped
 class ApiRepository @Inject constructor(
     private val apiServices: ApiServices
 ) {
