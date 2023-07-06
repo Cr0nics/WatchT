@@ -1,11 +1,13 @@
 package com.example.watcht.ui.view.PopularMovies
 
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watcht.R
@@ -24,10 +26,8 @@ class MovieListFragment : Fragment() {
 
 
     private lateinit var binding: FragmentMovieListBinding
-    private lateinit var viewModel: MovieListViewModel
+    private val viewModel by viewModels<MovieListViewModel>()
 
-    @Inject
-    lateinit var repository: ApiRepository
 
     @Inject
     lateinit var moviesAdapter: PopularMoviesAdapter
@@ -42,62 +42,92 @@ class MovieListFragment : Fragment() {
         binding = FragmentMovieListBinding.inflate(layoutInflater, container, false)
         return binding.root
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
+        viewModel.getMovieList(1)
 
-            progressBar.visibility = View.VISIBLE
-            repository.getPopularMovies(1).enqueue(object :
-                retrofit2.Callback<PopularMovieListResponse> {
-                override fun onResponse(
-                    call: Call<PopularMovieListResponse>,
-                    response: Response<PopularMovieListResponse>
-                ) {
-                    progressBar.visibility = View.GONE
-                    when (response.code()) {
-                        200 -> {
-                            moviesAdapter.setOnClickItemListener {
-                                navigateToDetail(it)
-                            }
-                            response.body().let { itBody ->
-                                if (itBody?.results!!.isNotEmpty()) {
-                                    moviesAdapter.differ.submitList(itBody.results)
-                                }
-                                recViewPopularMovies.apply {
-                                    layoutManager = LinearLayoutManager(requireContext())
-                                    adapter = moviesAdapter
-                                }
 
-                            }
+        viewModel.dataState.observe(viewLifecycleOwner) { dataState ->
+
+            when (dataState) {
+                is DataState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is DataState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+
+                    moviesAdapter.setOnClickItemListener {
+                        navigateToDetail(it)
+                    }
+                    moviesAdapter.differ.submitList(dataState.response.results)
+                    binding.recViewPopularMovies.apply {
+                        layoutManager = LinearLayoutManager(requireContext())
+                        adapter = moviesAdapter
+                    }
+
+
+                }
+                is DataState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "x", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
+        /*
+        repository.getPopularMovies(1).enqueue(object :
+            retrofit2.Callback<PopularMovieListResponse> {
+            override fun onResponse(
+                call: Call<PopularMovieListResponse>,
+                response: Response<PopularMovieListResponse>
+            ) {
+                progressBar.visibility = View.GONE
+                when (response.code()) {
+                    200 -> {
+                        moviesAdapter.setOnClickItemListener {
+                            navigateToDetail(it)
                         }
-                        400 -> {
-                            Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
-                            progressBar.visibility = View.GONE
-
-                        }
-                        401 -> {
-                            Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
-                            progressBar.visibility = View.GONE
+                        response.body().let { itBody ->
+                            if (itBody?.results!!.isNotEmpty()) {
+                                moviesAdapter.differ.submitList(itBody.results)
+                            }
+                            recViewPopularMovies.apply {
+                                layoutManager = LinearLayoutManager(requireContext())
+                                adapter = moviesAdapter
+                            }
 
                         }
                     }
+                    400 -> {
+                        Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
+                        progressBar.visibility = View.GONE
+
+                    }
+                    401 -> {
+                        Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
+                        progressBar.visibility = View.GONE
+
+                    }
                 }
+            }
 
-                override fun onFailure(call: Call<PopularMovieListResponse>, t: Throwable) {
-                    progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), "OnFailure", Toast.LENGTH_SHORT).show()
+            override fun onFailure(call: Call<PopularMovieListResponse>, t: Throwable) {
+                progressBar.visibility = View.GONE
+                Toast.makeText(requireContext(), "OnFailure", Toast.LENGTH_SHORT).show()
 
-                }
+            }
 
-            })
-        }
+        }) */
 
 
     }
-    private fun navigateToDetail(item: PopularMovieListResponse.Result){
+
+
+    private fun navigateToDetail(item: PopularMovieListResponse.Result) {
 
         val bundle = Bundle()
         bundle.putString("id", item.id.toString())
