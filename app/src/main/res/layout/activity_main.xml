@@ -23,10 +23,14 @@
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <FrameLayout
+        <fragment
             android:id="@+id/fragment_container"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation" />
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -39,3 +43,4 @@
         app:itemTextColor="@color/lavender"
         app:menu="@menu/menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
+
