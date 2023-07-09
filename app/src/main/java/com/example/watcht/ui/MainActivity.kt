@@ -40,22 +40,11 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.nav_view)
 
         navController = findNavController(R.id.fragment_container)
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.settingsFragment,
-                R.id.contactMeFragment,
-                R.id.aboutMeFragment
-            )
-        )
         setupActionBarWithNavController(navController, drawerLayout)
         navigationView.setupWithNavController(navController)
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.fragment_container)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
+    //ESTA ES LA FUNCION
 
 }
