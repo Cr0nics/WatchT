@@ -1,6 +1,6 @@
 package com.example.watcht.data
 
-import com.example.watcht.core.modelResponse.PopularMovieListResponse
+import com.example.watcht.data.modelResponse.PopularMovieListResponse
 import com.example.watcht.data.modelResponse.movieDetails.MovieDetails
 import retrofit2.Call
 import retrofit2.http.GET

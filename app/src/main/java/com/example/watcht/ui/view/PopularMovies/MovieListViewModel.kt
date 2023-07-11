@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.watcht.core.modelResponse.PopularMovieListResponse
+import com.example.watcht.data.modelResponse.PopularMovieListResponse
 import com.example.watcht.data.ApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call

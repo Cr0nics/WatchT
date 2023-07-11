@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watcht.R
-import com.example.watcht.core.modelResponse.PopularMovieListResponse
+import com.example.watcht.data.modelResponse.PopularMovieListResponse
 import com.example.watcht.data.ApiRepository
 import com.example.watcht.databinding.FragmentMovieListBinding
 import com.example.watcht.ui.view.Details.MovieDetailFragment
