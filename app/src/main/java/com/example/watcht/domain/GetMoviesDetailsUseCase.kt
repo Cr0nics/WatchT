@@ -13,7 +13,7 @@ import retrofit2.Response
 import java.lang.Thread.State
 import javax.inject.Inject
 
-class GetMoviesDetailsUseCase @Inject constructor(private val apiServices: ApiServices) {
+class GetMoviesDetailsUseCase @Inject constructor(private val apiServices: ApiRepository) {
 
     sealed class StateCall {
         object LoadingCall : StateCall()
@@ -25,7 +25,7 @@ class GetMoviesDetailsUseCase @Inject constructor(private val apiServices: ApiSe
         val result = MutableLiveData<StateCall>()
         result.value = StateCall.LoadingCall
 
-        apiServices.getMovieDetails(id).enqueue(object : Callback<MovieDetails> {
+        apiServices.getMovieDetail(id).enqueue(object : Callback<MovieDetails> {
             override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
                 if (response.isSuccessful) {
                     val movieDetails = response.body()
