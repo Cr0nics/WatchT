@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dataRoot"
         android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="196dp" />
+            app:layout_constraintGuide_end="153dp" />
 
         <TextView
             android:id="@+id/tvMovieName"
