@@ -9,8 +9,8 @@ class ApiRepository @Inject constructor(
     private val apiServices: ApiServices
 ) {
 
-    fun getPopularMovies(page:Int) = apiServices.getPopularMovies(page)
-    fun getMovieDetail(id:Int) = apiServices.getMovieDetails(id)
+    fun getPopularMovies(page: Int) = apiServices.getPopularMovies(page)
+    fun getMovieDetail(id: Int) = apiServices.getMovieDetails(id)
 
 
 }
