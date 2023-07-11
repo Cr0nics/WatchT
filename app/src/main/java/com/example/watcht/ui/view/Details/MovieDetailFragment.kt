@@ -53,7 +53,7 @@ class MovieDetailFragment : Fragment() {
             prgBarMovies.visibility = View.VISIBLE
             viewModel.movieDetailState.observe(viewLifecycleOwner) { detailState ->
 
-                when(detailState){
+                when (detailState) {
 
                     is DetailState.LoadingMovieDetails -> {
 
@@ -91,9 +91,7 @@ class MovieDetailFragment : Fragment() {
                         prgBarMovies.visibility = View.GONE
 
 
-
                     }
-
 
 
                 }
@@ -102,70 +100,14 @@ class MovieDetailFragment : Fragment() {
             }
 
         }
-
-
-        /*
-
-     binding.apply {
-            prgBarMovies.visibility = View.VISIBLE
-            repository.getMovieDetail(id = id.toInt()).enqueue(object : Callback<MovieDetails> {
-                override fun onResponse(
-                    call: Call<MovieDetails>,
-                    response: Response<MovieDetails>
-                ) {
-                    when (response.code()) {
-                        200 -> {
-
-                            prgBarMovies.visibility = View.GONE
-                            response.body()?.let { itBody ->
-                                val moviePosterURL = POSTER_BASE_URL + itBody.poster_path
-                                imgMovie.load(moviePosterURL) {
-                                    crossfade(true)
-                                    placeholder(R.drawable.poster_placeholder)
-                                    scale(Scale.FILL)
-                                }
-                                imgMovieBack.load(moviePosterURL) {
-                                    crossfade(true)
-                                    placeholder(R.drawable.poster_placeholder)
-                                    scale(Scale.FILL)
-                                }
-                                tvMovieTitle.text = itBody.title
-                                tvMovieTagLine.text = itBody.tagline
-                                tvMovieDateRelease.text = itBody.release_date
-                                tvMovieRating.text = itBody.vote_average.toString()
-                                tvMovieRuntime.text = itBody.runtime.toString()
-                                tvMovieBudget.text = itBody.budget.toString()
-                                tvMovieRevenue.text = itBody.revenue.toString()
-                                tvMovieOverview.text = itBody.overview
-                            }
-                        }
-                        401 -> {
-                            Toast.makeText(requireContext(), "401", Toast.LENGTH_SHORT).show()
-                        }
-                        404 -> {
-                            Toast.makeText(requireContext(), "404", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<MovieDetails>, t: Throwable) {
-                    prgBarMovies.visibility = View.GONE
-                    Toast.makeText(requireContext(), "OnFailure", Toast.LENGTH_SHORT).show()
-                }
-
-            })
-
-
-        }
- */
-
     }
-
-
 
 
     companion object {
         fun newInstance() = MovieDetailFragment()
     }
+
+
+
 
 }
