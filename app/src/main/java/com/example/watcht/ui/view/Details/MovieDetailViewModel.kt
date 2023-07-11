@@ -2,15 +2,15 @@ package com.example.watcht.ui.view.Details
 
 
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.watcht.data.ApiRepository
 import com.example.watcht.data.modelResponse.movieDetails.MovieDetails
-import com.example.watcht.ui.view.PopularMovies.DataState
+import com.example.watcht.domain.GetMoviesDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,47 +28,29 @@ sealed class DetailState {
 
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor() : ViewModel() {
-
-
+class MovieDetailViewModel @Inject constructor(private val useCase: GetMoviesDetailsUseCase) :
+    ViewModel() {
     private val _movieDetailState = MutableLiveData<DetailState>()
     val movieDetailState: LiveData<DetailState> = _movieDetailState
 
-    @Inject
-    lateinit var repository: ApiRepository
+    fun getDetailsUseCase(id: Int) {
+        _movieDetailState.value = DetailState.LoadingMovieDetails
 
-    fun getDetails(id: Int) {
-
-        _movieDetailState.postValue(DetailState.LoadingMovieDetails)
-
-        repository.getMovieDetail(id).enqueue(object : Callback<MovieDetails> {
-            override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
-                when (response.code()) {
-                    200 -> {
-                        response.body().let { itBody ->
-
-                            _movieDetailState.postValue(itBody?.let { DetailState.SuccessMovieDetails(it) })
-                            Log.i("Joaking", "success")
-
-                        }
-
-                    }
-
-                    401 -> {
-                        _movieDetailState.postValue(DetailState.ErrorMovieDetails)
-                    }
-                    404 -> {
-                        _movieDetailState.postValue(DetailState.ErrorMovieDetails)
-                    }
+        useCase.getDetails(id).observeForever { stateCall ->
+            when (stateCall) {
+                is GetMoviesDetailsUseCase.StateCall.SuccessCall -> {
+                    _movieDetailState.value =
+                        DetailState.SuccessMovieDetails(stateCall.movieDetails)
+                }
+                is GetMoviesDetailsUseCase.StateCall.LoadingCall -> {
+                    _movieDetailState.value =
+                        DetailState.LoadingMovieDetails
+                }
+                is GetMoviesDetailsUseCase.StateCall.ErrorCall -> {
+                    _movieDetailState.value =
+                        DetailState.ErrorMovieDetails
                 }
             }
-
-            override fun onFailure(call: Call<MovieDetails>, t: Throwable) {
-                _movieDetailState.postValue(DetailState.ErrorMovieDetails)
-            }
-        })
-
+        }
     }
-
-
 }

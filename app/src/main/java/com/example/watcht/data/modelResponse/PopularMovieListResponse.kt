@@ -1,4 +1,4 @@
-package com.example.watcht.core.modelResponse
+package com.example.watcht.data.modelResponse
 
 import com.google.gson.annotations.SerializedName
 

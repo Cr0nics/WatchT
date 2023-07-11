@@ -47,8 +47,8 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val id: String = (requireArguments().getString("id")).toString()
-        viewModel.getDetails(id.toInt())
 
+        viewModel.getDetailsUseCase(id.toInt())
         binding.apply {
             prgBarMovies.visibility = View.VISIBLE
             viewModel.movieDetailState.observe(viewLifecycleOwner) { detailState ->
@@ -89,7 +89,7 @@ class MovieDetailFragment : Fragment() {
                     is DetailState.ErrorMovieDetails -> {
 
                         prgBarMovies.visibility = View.GONE
-
+                        Toast.makeText(context, "Error loading movie details", Toast.LENGTH_SHORT).show()
 
                     }
 
