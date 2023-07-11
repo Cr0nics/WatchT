@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watcht.R
@@ -76,18 +78,18 @@ class MovieListFragment : Fragment() {
 
         }
 
+
+
     }
 
-
-    private fun navigateToDetail(item: PopularMovieListResponse.Result) {
-
-        val bundle = Bundle()
-        bundle.putString("id", item.id.toString())
-        val movieDetailFragment = MovieDetailFragment()
-        movieDetailFragment.arguments = bundle
-        findNavController().navigate(R.id.action_movieListFragment_to_movieDetailFragment, bundle)
-
+    fun navigateToDetail(item: PopularMovieListResponse.Result) {
+        val bundle = Bundle().apply {
+            putString("id", item.id.toString())
+        }
+        val navController = Navigation.findNavController(requireView())
+        navController.navigate(R.id.action_movieListFragment_to_movieDetailFragment, bundle)
     }
+
 
     companion object {
         fun newInstance() = MovieListFragment()
