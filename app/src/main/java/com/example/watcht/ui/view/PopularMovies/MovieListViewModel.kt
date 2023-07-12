@@ -4,15 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.watcht.data.modelResponse.PopularMovieListResponse
+import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.data.ApiRepository
-import com.example.watcht.domain.GetMoviesDetailsUseCase
 import com.example.watcht.domain.GetPopularMoviesUseCase
-import com.example.watcht.ui.view.Details.DetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 

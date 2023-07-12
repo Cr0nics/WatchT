@@ -1,6 +1,6 @@
 package com.example.watcht.data
 
-import dagger.hilt.android.scopes.ActivityScoped
+import com.example.watcht.data.network.ApiServices
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 

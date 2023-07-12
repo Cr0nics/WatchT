@@ -10,16 +10,9 @@ import androidx.fragment.app.viewModels
 import coil.load
 import coil.size.Scale
 import com.example.watcht.R
-import com.example.watcht.data.ApiRepository
-import com.example.watcht.data.modelResponse.movieDetails.MovieDetails
 import com.example.watcht.databinding.FragmentMovieDetailBinding
-import com.example.watcht.ui.view.PopularMovies.MovieListViewModel
 import com.example.watcht.utils.utils.POSTER_BASE_URL
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import javax.inject.Inject
 
 
 @AndroidEntryPoint

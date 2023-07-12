@@ -1,7 +1,7 @@
-package com.example.watcht.core
+package com.example.watcht.di
 
 import com.example.watcht.BuildConfig
-import com.example.watcht.data.ApiServices
+import com.example.watcht.data.network.ApiServices
 
 import com.example.watcht.utils.utils.API_KEY
 import com.example.watcht.utils.utils.BASE_URL

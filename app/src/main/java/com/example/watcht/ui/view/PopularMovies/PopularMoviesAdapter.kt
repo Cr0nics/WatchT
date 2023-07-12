@@ -1,7 +1,6 @@
 package com.example.watcht.ui.view.PopularMovies
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
 import com.example.watcht.R
-import com.example.watcht.data.modelResponse.PopularMovieListResponse
+import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.MovieItemBinding
 import com.example.watcht.utils.utils.POSTER_BASE_URL
 import javax.inject.Inject

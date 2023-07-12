@@ -1,7 +1,6 @@
 package com.example.watcht.ui.view.PopularMovies
 
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,19 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watcht.R
-import com.example.watcht.data.modelResponse.PopularMovieListResponse
-import com.example.watcht.data.ApiRepository
+import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.FragmentMovieListBinding
-import com.example.watcht.ui.view.Details.MovieDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Response
 import javax.inject.Inject
-import javax.security.auth.callback.Callback
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
