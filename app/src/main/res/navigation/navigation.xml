@@ -38,4 +38,9 @@
         android:name="com.example.watcht.ui.view.menuDetails.about.AboutMeFragment"
         android:label="fragment_about_me"
         tools:layout="@layout/fragment_about_me" />
+    <fragment
+        android:id="@+id/myListFragment"
+        android:name="com.example.watcht.ui.view.List.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" />
 </navigation>

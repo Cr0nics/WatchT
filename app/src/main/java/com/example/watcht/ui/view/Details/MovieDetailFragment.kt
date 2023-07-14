@@ -69,6 +69,15 @@ class MovieDetailFragment : Fragment() {
                             placeholder(R.drawable.poster_placeholder)
                             scale(Scale.FILL)
                         }
+                        imgMovieBack.setOnClickListener {
+                            Toast.makeText(
+                                requireContext(),
+                                "Estas hablando con un reptiliano",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            viewModel.saveMovie(itBody)
+                        }
+
                         tvMovieTitle.text = itBody.title
                         tvMovieTagLine.text = itBody.tagline
                         tvMovieDateRelease.text = itBody.release_date
@@ -82,7 +91,8 @@ class MovieDetailFragment : Fragment() {
                     is DetailState.ErrorMovieDetails -> {
 
                         prgBarMovies.visibility = View.GONE
-                        Toast.makeText(context, "Error loading movie details", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Error loading movie details", Toast.LENGTH_SHORT)
+                            .show()
 
                     }
 
@@ -99,8 +109,6 @@ class MovieDetailFragment : Fragment() {
     companion object {
         fun newInstance() = MovieDetailFragment()
     }
-
-
 
 
 }
