@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.watcht.R
+import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.FragmentListBinding
 import com.example.watcht.ui.view.PopularMovies.PopularMoviesAdapter
 import com.example.watcht.ui.view.menuDetails.settings.SettingsViewModel
@@ -50,7 +53,19 @@ class ListFragment : Fragment() {
             }
 
         }
+        moviesAdapter.setOnClickItemListener { navigateToDetailFromListFragment(it) }
+
+    }
+
+    fun navigateToDetailFromListFragment(item: PopularMovieListResponse.Result) {
+
+        val bundle = Bundle().apply {
+            putString("id", item.id.toString())
+            putString("type","else")
+        }
 
 
+        val navController = Navigation.findNavController(requireView())
+        navController.navigate(R.id.action_myListFragment_to_movieDetailFragment, bundle)
     }
 }

@@ -22,6 +22,9 @@
         <argument
             android:name="movieID"
             app:argType="string" />
+        <argument
+            android:name="detailType"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -42,5 +45,9 @@
         android:id="@+id/myListFragment"
         android:name="com.example.watcht.ui.view.List.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_myListFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
 </navigation>

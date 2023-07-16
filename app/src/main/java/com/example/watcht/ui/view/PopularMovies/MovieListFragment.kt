@@ -77,8 +77,10 @@ class MovieListFragment : Fragment() {
     fun navigateToDetail(item: PopularMovieListResponse.Result) {
         val bundle = Bundle().apply {
             putString("id", item.id.toString())
+            putString("type","saved")
         }
         val navController = Navigation.findNavController(requireView())
+
         navController.navigate(R.id.action_movieListFragment_to_movieDetailFragment, bundle)
     }
 

@@ -1,5 +1,6 @@
 package com.example.watcht.ui.view.List
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,7 @@ class ListViewModel @Inject constructor(
     fun getMoviesFromDataBase() {
 
         viewModelScope.launch{
+            Log.i("JoakingData","DataReload")
             val savedData = getMoviesListDataBaseUseCase.getMovies()
             _dataSaved.postValue(savedData)
         }

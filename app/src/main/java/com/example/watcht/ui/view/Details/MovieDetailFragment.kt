@@ -40,6 +40,7 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val id: String = (requireArguments().getString("id")).toString()
+        val type: String = (requireArguments().getString("type")).toString()
 
         viewModel.getDetailsUseCase(id.toInt())
         binding.apply {
@@ -69,14 +70,6 @@ class MovieDetailFragment : Fragment() {
                             placeholder(R.drawable.poster_placeholder)
                             scale(Scale.FILL)
                         }
-                        imgMovieBack.setOnClickListener {
-                            Toast.makeText(
-                                requireContext(),
-                                "Estas hablando con un reptiliano",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            viewModel.saveMovie(itBody)
-                        }
 
                         tvMovieTitle.text = itBody.title
                         tvMovieTagLine.text = itBody.tagline
@@ -86,6 +79,27 @@ class MovieDetailFragment : Fragment() {
                         tvMovieBudget.text = itBody.budget.toString()
                         tvMovieRevenue.text = itBody.revenue.toString()
                         tvMovieOverview.text = itBody.overview
+
+                        if (type == "saved") {
+                            btnSaveOrDelete.setOnClickListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Saved",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                viewModel.saveMovie(itBody)
+                            }
+                            btnSaveOrDelete.setImageResource(R.drawable.ic_add)
+                        } else {
+                            btnSaveOrDelete.setImageResource(R.drawable.ic_delete)
+                            btnSaveOrDelete.setOnClickListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "DELETE",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
 
                     }
                     is DetailState.ErrorMovieDetails -> {
