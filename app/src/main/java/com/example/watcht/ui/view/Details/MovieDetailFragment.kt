@@ -7,19 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import coil.load
 import coil.size.Scale
 import com.example.watcht.R
-import com.example.watcht.data.ApiRepository
-import com.example.watcht.data.modelResponse.movieDetails.MovieDetails
+import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.FragmentMovieDetailBinding
-import com.example.watcht.ui.view.PopularMovies.MovieListViewModel
 import com.example.watcht.utils.utils.POSTER_BASE_URL
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -47,8 +42,9 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val id: String = (requireArguments().getString("id")).toString()
-        viewModel.getDetails(id.toInt())
+        val type: String = (requireArguments().getString("type")).toString()
 
+        viewModel.getDetailsUseCase(id.toInt())
         binding.apply {
             prgBarMovies.visibility = View.VISIBLE
             viewModel.movieDetailState.observe(viewLifecycleOwner) { detailState ->
@@ -76,6 +72,7 @@ class MovieDetailFragment : Fragment() {
                             placeholder(R.drawable.poster_placeholder)
                             scale(Scale.FILL)
                         }
+
                         tvMovieTitle.text = itBody.title
                         tvMovieTagLine.text = itBody.tagline
                         tvMovieDateRelease.text = itBody.release_date
@@ -85,11 +82,36 @@ class MovieDetailFragment : Fragment() {
                         tvMovieRevenue.text = itBody.revenue.toString()
                         tvMovieOverview.text = itBody.overview
 
+                        if (type == "saved") {
+                            btnSaveOrDelete.setOnClickListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Saved",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                viewModel.saveMovie(itBody)
+                            }
+                            btnSaveOrDelete.setImageResource(R.drawable.ic_add)
+                        } else {
+                            btnSaveOrDelete.setImageResource(R.drawable.ic_delete)
+                            btnSaveOrDelete.setOnClickListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "DELETE",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                viewModel.deleteMovie(itBody)
+                                navigateToListFromDetailFragment()
+
+                            }
+                        }
+
                     }
                     is DetailState.ErrorMovieDetails -> {
 
                         prgBarMovies.visibility = View.GONE
-
+                        Toast.makeText(context, "Error loading movie details", Toast.LENGTH_SHORT)
+                            .show()
 
                     }
 
@@ -107,7 +129,10 @@ class MovieDetailFragment : Fragment() {
         fun newInstance() = MovieDetailFragment()
     }
 
+    fun navigateToListFromDetailFragment() {
 
 
-
+        val navController = Navigation.findNavController(requireView())
+        navController.navigate(R.id.action_movieDetailFragment_to_myListFragment)
+    }
 }

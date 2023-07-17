@@ -1,4 +1,4 @@
-package com.example.watcht.ui.view.PopularMovies
+package com.example.watcht.ui.view.List
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -15,9 +15,9 @@ import com.example.watcht.utils.utils.POSTER_BASE_URL
 import javax.inject.Inject
 
 
-class PopularMoviesAdapter @Inject constructor(
+class MoviesListAdapter @Inject constructor(
 
-) : RecyclerView.Adapter<PopularMoviesAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MoviesListAdapter.ViewHolder>() {
 
     private lateinit var binding: MovieItemBinding
     private lateinit var context: Context

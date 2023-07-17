@@ -1,4 +1,4 @@
-package com.example.watcht.data.modelResponse.movieDetails
+package com.example.watcht.data.model.movieDetails
 
 data class MovieDetails(
     val adult: Boolean,
@@ -44,7 +44,6 @@ data class ProductionCountry(
     val iso_3166_1: String,
     val name: String
 )
-
 data class SpokenLanguage(
     val english_name: String,
     val iso_639_1: String,

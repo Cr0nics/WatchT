@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         navController = this.findNavController(R.id.fragment_container)
         appBarConfiguration = AppBarConfiguration(
             setOf(
+                R.id.myListFragment,
                 R.id.movieListFragment,
                 R.id.settingsFragment,
                 R.id.contactMeFragment,

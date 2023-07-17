@@ -1,7 +1,7 @@
-package com.example.watcht.data
+package com.example.watcht.data.network
 
-import com.example.watcht.core.modelResponse.PopularMovieListResponse
-import com.example.watcht.data.modelResponse.movieDetails.MovieDetails
+import com.example.watcht.data.model.PopularMovieListResponse
+import com.example.watcht.data.model.movieDetails.MovieDetails
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

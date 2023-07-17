@@ -1,4 +1,4 @@
-package com.example.watcht.ui.view.menuDetails.settings
+package com.example.watcht.ui.view.List
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,30 +7,32 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.domain.GetSavedMovieListFromDatabaseUseCase
-import com.example.watcht.domain.SaveMovieToDataBaseUseCase
 import com.example.watcht.ui.view.PopularMovies.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+sealed class SavedData{
+    object Loading : SavedData()
+    data class Success(val response: List<PopularMovieListResponse.Result>) : SavedData()
+}
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(
+class ListViewModel @Inject constructor(
     private val getMoviesListDataBaseUseCase: GetSavedMovieListFromDatabaseUseCase
 ) :ViewModel() {
-    private val _data = MutableLiveData<List<PopularMovieListResponse.Result>>()
-    val data: LiveData<List<PopularMovieListResponse.Result>> = _data
+    private val _dataSaved = MutableLiveData<SavedData>()
+    val dataSaved: LiveData<SavedData> = _dataSaved
 
-    fun getMovies() {
-
+    fun getMoviesFromDataBase() {
+        _dataSaved.postValue(SavedData.Loading)
         viewModelScope.launch{
-            val saved_data = getMoviesListDataBaseUseCase.getMovies()
-            _data.postValue(saved_data)
-            Log.i("Joaking","$data")
+            Log.i("JoakingData","DataReload")
+            val savedData = getMoviesListDataBaseUseCase.getMovies()
+            _dataSaved.postValue(SavedData.Success(savedData))
         }
-
-
     }
+
 
 
 }

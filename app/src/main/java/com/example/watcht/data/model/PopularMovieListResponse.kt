@@ -1,5 +1,6 @@
-package com.example.watcht.core.modelResponse
+package com.example.watcht.data.model
 
+import com.example.watcht.data.database.entities.MovieEntity
 import com.google.gson.annotations.SerializedName
 
 data class PopularMovieListResponse(
@@ -7,14 +8,14 @@ data class PopularMovieListResponse(
     val results: List<Result>,
     val total_pages: Int,
     val total_results: Int
-){
+) {
     data class Result(
         @SerializedName("adult")
         val adult: Boolean,
         @SerializedName("backdrop_path")
-        val backdropPath: String,
+        val backdropPath: String?,
         @SerializedName("genre_ids")
-        val genreIds: List<Int>,
+        val genreIds: List<Int>?,
         @SerializedName("id")
         val id: Int, // 453395
         @SerializedName("original_language")
@@ -39,3 +40,20 @@ data class PopularMovieListResponse(
         val voteCount: Int
     )
 }
+
+fun MovieEntity.toDomain() = PopularMovieListResponse.Result(
+    adult,
+    backdropPath,
+    genreIds,
+    id,
+    originalLanguage,
+    originalTitle,
+    overview,
+    popularity,
+    posterPath,
+    releaseDate,
+    title,
+    video,
+    voteAverage,
+    voteCount
+)
