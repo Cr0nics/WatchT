@@ -24,6 +24,13 @@ class ApiRepository @Inject constructor(
 
     }
 
+    suspend fun deleteMovieFromDatabase(item : MovieEntity){
+
+        moviesDao.deleteMovie(item)
+
+
+    }
+
     suspend fun insertMovieListToDatabase(item : MovieEntity){
 
         moviesDao.insertMovie(item)

@@ -2,7 +2,6 @@ package com.example.watcht.domain
 
 import com.example.watcht.data.ApiRepository
 import com.example.watcht.data.database.dao.MoviesDao
-import com.example.watcht.data.database.entities.toDatabase
 import com.example.watcht.data.model.PopularMovieListResponse
 import javax.inject.Inject
 

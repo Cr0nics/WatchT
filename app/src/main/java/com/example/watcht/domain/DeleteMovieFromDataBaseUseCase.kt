@@ -5,13 +5,13 @@ import com.example.watcht.data.database.entities.toDatabaseEntity
 import com.example.watcht.data.model.movieDetails.MovieDetails
 import javax.inject.Inject
 
-class SaveMovieToDataBaseUseCase @Inject constructor(
+class DeleteMovieFromDataBaseUseCase@Inject constructor(
     private val apiServices: ApiRepository,
 ) {
 
 
-    suspend fun saveMovie(movie: MovieDetails){
-        apiServices.insertMovieListToDatabase(movie.toDatabaseEntity())
+    suspend fun deleteMovie(movie: MovieDetails){
+        apiServices.deleteMovieFromDatabase(movie.toDatabaseEntity())
     }
 
 

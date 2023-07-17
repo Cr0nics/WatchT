@@ -6,11 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.watcht.data.model.movieDetails.MovieDetails
+import com.example.watcht.domain.DeleteMovieFromDataBaseUseCase
 import com.example.watcht.domain.GetMoviesDetailsUseCase
 import com.example.watcht.domain.SaveMovieToDataBaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+
 
 sealed class DetailState {
 
@@ -26,7 +29,8 @@ sealed class DetailState {
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val detailuseCase: GetMoviesDetailsUseCase,
-    private val saveMovieUseCase: SaveMovieToDataBaseUseCase
+    private val saveMovieUseCase: SaveMovieToDataBaseUseCase,
+    private val deleteMovieUseCase:DeleteMovieFromDataBaseUseCase
 ) :
     ViewModel() {
     private val _movieDetailState = MutableLiveData<DetailState>()
@@ -56,6 +60,14 @@ class MovieDetailViewModel @Inject constructor(
     fun saveMovie(movie:MovieDetails){
         viewModelScope.launch {
             saveMovieUseCase.saveMovie(movie)
+        }
+    }
+
+
+
+    fun deleteMovie(movie:MovieDetails){
+        viewModelScope.launch {
+            deleteMovieUseCase.deleteMovie(movie)
         }
     }
 }

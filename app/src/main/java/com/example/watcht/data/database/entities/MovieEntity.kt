@@ -41,7 +41,7 @@ data class MovieEntity(
     val voteCount: Int
 )
 
-fun MovieDetails.toDatabase() =
+fun MovieDetails.toDatabaseEntity() =
     MovieEntity(
         id = id,
         adult = adult,

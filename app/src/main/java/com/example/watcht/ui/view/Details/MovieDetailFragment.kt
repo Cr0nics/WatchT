@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import coil.load
 import coil.size.Scale
 import com.example.watcht.R
+import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.FragmentMovieDetailBinding
 import com.example.watcht.utils.utils.POSTER_BASE_URL
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +100,9 @@ class MovieDetailFragment : Fragment() {
                                     "DELETE",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                viewModel.deleteMovie(itBody)
+                                navigateToListFromDetailFragment()
+
                             }
                         }
 
@@ -124,5 +129,10 @@ class MovieDetailFragment : Fragment() {
         fun newInstance() = MovieDetailFragment()
     }
 
+    fun navigateToListFromDetailFragment() {
 
+
+        val navController = Navigation.findNavController(requireView())
+        navController.navigate(R.id.action_movieDetailFragment_to_myListFragment)
+    }
 }

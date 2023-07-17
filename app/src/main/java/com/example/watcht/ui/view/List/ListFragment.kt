@@ -1,10 +1,12 @@
 package com.example.watcht.ui.view.List
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,15 +47,28 @@ class ListFragment : Fragment() {
 
        viewModel.getMoviesFromDataBase()
 
+
         viewModel.dataSaved.observe(viewLifecycleOwner) { data ->
-            moviesAdapter.differ.submitList(data)
-            binding.recViewMovies.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = moviesAdapter
+
+            when(data){
+                is SavedData.Loading -> {
+                    binding.recViewMovies.visibility = View.GONE
+                }
+                is SavedData.Success ->{
+                    moviesAdapter.differ.submitList(data.response)
+                    binding.recViewMovies.apply {
+                        layoutManager = LinearLayoutManager(requireContext())
+                        adapter = moviesAdapter
+                    }
+                    moviesAdapter.setOnClickItemListener { navigateToDetailFromListFragment(it) }
+
+                    binding.recViewMovies.visibility = View.VISIBLE
+
+                }
+                }
             }
 
-        }
-        moviesAdapter.setOnClickItemListener { navigateToDetailFromListFragment(it) }
+
 
     }
 
@@ -67,5 +82,11 @@ class ListFragment : Fragment() {
 
         val navController = Navigation.findNavController(requireView())
         navController.navigate(R.id.action_myListFragment_to_movieDetailFragment, bundle)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i("Joaking","Joaking")
+        moviesAdapter.differ.submitList(null)
     }
 }

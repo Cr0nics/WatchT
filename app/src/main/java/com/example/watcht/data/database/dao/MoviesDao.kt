@@ -1,9 +1,6 @@
 package com.example.watcht.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.watcht.data.database.entities.MovieEntity
 
 
@@ -16,5 +13,6 @@ interface MoviesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movies:MovieEntity)
-
+    @Delete
+    suspend fun deleteMovie(movie: MovieEntity)
 }
