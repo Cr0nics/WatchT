@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.watcht.data.ApiRepository
-import com.example.watcht.data.modelResponse.PopularMovieListResponse
-import com.example.watcht.data.modelResponse.movieDetails.MovieDetails
-import com.example.watcht.ui.view.PopularMovies.DataState
+import com.example.watcht.data.model.PopularMovieListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

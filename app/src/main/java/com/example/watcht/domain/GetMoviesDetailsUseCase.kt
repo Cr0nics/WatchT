@@ -1,16 +1,12 @@
 package com.example.watcht.domain
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.watcht.data.ApiRepository
-import com.example.watcht.data.ApiServices
-import com.example.watcht.data.modelResponse.movieDetails.MovieDetails
-import com.example.watcht.ui.view.Details.DetailState
+import com.example.watcht.data.model.movieDetails.MovieDetails
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Thread.State
 import javax.inject.Inject
 
 class GetMoviesDetailsUseCase @Inject constructor(private val apiServices: ApiRepository) {
