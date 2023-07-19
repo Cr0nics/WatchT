@@ -17,8 +17,8 @@ class GetPopularMoviesUseCase @Inject constructor(private val apiServices: ApiRe
         data class SuccessCall(val movieDetails: PopularMovieListResponse) : StatesMovies()
         object ErrorCall : StatesMovies()
     }
-
-    fun getPopularMovies(page: Int): LiveData<StatesMovies> {
+/*
+    suspend fun getPopularMovies(page: Int): LiveData<StatesMovies> {
         val result = MutableLiveData<StatesMovies>()
         result.value = StatesMovies.LoadingCall
 
@@ -51,5 +51,5 @@ class GetPopularMoviesUseCase @Inject constructor(private val apiServices: ApiRe
 
         return result
     }
-
+*/
 }

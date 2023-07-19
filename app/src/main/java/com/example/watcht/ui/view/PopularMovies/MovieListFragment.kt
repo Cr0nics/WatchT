@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watcht.R
 import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.FragmentMovieListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,9 +43,16 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMovieList(1)
-
-
+//        viewModel.getMovieList(1)
+        lifecycleScope.launchWhenCreated {
+            viewModel.movieList.collect {
+                moviesAdapter.submitData(it)
+            }
+        }
+        moviesAdapter.setOnClickItemListener { navigateToDetail(it) }
+        binding.recViewPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        binding.recViewPopularMovies.adapter = moviesAdapter
+/*
         viewModel.dataState.observe(viewLifecycleOwner) { dataState ->
 
             when (dataState) {
@@ -70,7 +79,7 @@ class MovieListFragment : Fragment() {
 
         }
 
-
+*/
 
     }
 

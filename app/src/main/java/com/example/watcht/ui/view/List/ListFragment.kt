@@ -53,6 +53,7 @@ class ListFragment : Fragment() {
             when(data){
                 is SavedData.Loading -> {
                     binding.recViewMovies.visibility = View.GONE
+                    binding.tvEmptyMessage.visibility = View.GONE
                 }
                 is SavedData.Success ->{
                     moviesAdapter.differ.submitList(data.response)
@@ -61,8 +62,16 @@ class ListFragment : Fragment() {
                         adapter = moviesAdapter
                     }
                     moviesAdapter.setOnClickItemListener { navigateToDetailFromListFragment(it) }
-
                     binding.recViewMovies.visibility = View.VISIBLE
+
+                    Log.i("King123","${data.response.size}")
+
+
+                    if(data.response.size == 0){
+                        binding.tvEmptyMessage.visibility = View.VISIBLE
+                    }else{
+                        binding.tvEmptyMessage.visibility = View.GONE
+                    }
 
                 }
                 }
