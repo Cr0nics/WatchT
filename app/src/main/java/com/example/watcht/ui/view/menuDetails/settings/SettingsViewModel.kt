@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.domain.GetSavedMovieListFromDatabaseUseCase
-import com.example.watcht.domain.SaveMovieToDataBaseUseCase
-import com.example.watcht.ui.view.PopularMovies.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

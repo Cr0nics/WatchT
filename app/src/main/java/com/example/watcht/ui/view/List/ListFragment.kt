@@ -6,15 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watcht.R
 import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.FragmentListBinding
-import com.example.watcht.ui.view.PopularMovies.PopularMoviesAdapter
-import com.example.watcht.ui.view.menuDetails.settings.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -63,10 +60,7 @@ class ListFragment : Fragment() {
                     }
                     moviesAdapter.setOnClickItemListener { navigateToDetailFromListFragment(it) }
                     binding.recViewMovies.visibility = View.VISIBLE
-
                     Log.i("King123","${data.response.size}")
-
-
                     if(data.response.size == 0){
                         binding.tvEmptyMessage.visibility = View.VISIBLE
                     }else{

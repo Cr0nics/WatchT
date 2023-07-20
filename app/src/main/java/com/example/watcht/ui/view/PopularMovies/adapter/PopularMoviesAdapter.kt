@@ -1,10 +1,9 @@
-package com.example.watcht.ui.view.PopularMovies
+package com.example.watcht.ui.view.PopularMovies.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -18,7 +17,9 @@ import javax.inject.Inject
 
 class PopularMoviesAdapter @Inject constructor(
 
-) : PagingDataAdapter<PopularMovieListResponse.Result,PopularMoviesAdapter.ViewHolder>(differCallback) {
+) : PagingDataAdapter<PopularMovieListResponse.Result, PopularMoviesAdapter.ViewHolder>(
+    differCallback
+) {
 
     private lateinit var binding: MovieItemBinding
     private lateinit var context: Context
