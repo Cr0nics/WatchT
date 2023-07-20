@@ -5,14 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watcht.R
 import com.example.watcht.data.model.PopularMovieListResponse
 import com.example.watcht.databinding.FragmentMovieListBinding
+import com.example.watcht.databinding.PaginationLoadBinding
+import com.example.watcht.ui.view.PopularMovies.adapter.LoadAdapter
+import com.example.watcht.ui.view.PopularMovies.adapter.PopularMoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,37 +47,35 @@ class MovieListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMovieList(1)
 
-
-        viewModel.dataState.observe(viewLifecycleOwner) { dataState ->
-
-            when (dataState) {
-                is DataState.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-                is DataState.Success -> {
-                    binding.progressBar.visibility = View.GONE
-
-                    moviesAdapter.setOnClickItemListener {
-                        navigateToDetail(it)
-                    }
-                    moviesAdapter.differ.submitList(dataState.response.results)
-                    binding.recViewPopularMovies.apply {
-                        layoutManager = LinearLayoutManager(requireContext())
-                        adapter = moviesAdapter
-                    }
-                }
-                is DataState.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), "x", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.movieList.collect {
+                    moviesAdapter.submitData(it)
                 }
             }
-
         }
+        moviesAdapter.setOnClickItemListener { navigateToDetail(it) }
+        binding.recViewPopularMovies.layoutManager = LinearLayoutManager(requireContext())
+        binding.recViewPopularMovies.adapter = moviesAdapter
 
+
+        lifecycleScope.launchWhenCreated {
+            moviesAdapter.loadStateFlow.collect {
+                val state = it.refresh
+                binding.progressBar.isVisible = state is LoadState.Loading
+            }
+        }
+        binding.recViewPopularMovies.adapter = moviesAdapter.withLoadStateFooter(
+
+            LoadAdapter {
+
+                moviesAdapter.retry()
+
+            }
+
+        )
 
 
     }
@@ -77,7 +83,7 @@ class MovieListFragment : Fragment() {
     fun navigateToDetail(item: PopularMovieListResponse.Result) {
         val bundle = Bundle().apply {
             putString("id", item.id.toString())
-            putString("type","saved")
+            putString("type", "saved")
         }
         val navController = Navigation.findNavController(requireView())
 

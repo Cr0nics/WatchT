@@ -14,7 +14,7 @@ class ApiRepository @Inject constructor(
     private val moviesDao: MoviesDao
 ) {
 
-    fun getPopularMovies(page: Int) = apiServices.getPopularMovies(page)
+    suspend fun getPopularMovies(page: Int) = apiServices.getPopularMovies(page)
     fun getMovieDetail(id: Int) = apiServices.getMovieDetails(id)
 
     suspend fun getMovieListFromDatabase():List<PopularMovieListResponse.Result>{

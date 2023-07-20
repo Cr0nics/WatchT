@@ -1,9 +1,9 @@
-package com.example.watcht.ui.view.PopularMovies
+package com.example.watcht.ui.view.PopularMovies.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -17,7 +17,9 @@ import javax.inject.Inject
 
 class PopularMoviesAdapter @Inject constructor(
 
-) : RecyclerView.Adapter<PopularMoviesAdapter.ViewHolder>() {
+) : PagingDataAdapter<PopularMovieListResponse.Result, PopularMoviesAdapter.ViewHolder>(
+    differCallback
+) {
 
     private lateinit var binding: MovieItemBinding
     private lateinit var context: Context
@@ -26,7 +28,6 @@ class PopularMoviesAdapter @Inject constructor(
     fun setOnClickItemListener(listener: (PopularMovieListResponse.Result) -> Unit) {
         onClickItem = listener
     }
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,12 +43,12 @@ class PopularMoviesAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.holder(differ.currentList[position])
+        holder.holder(getItem(position)!!)
         holder.setIsRecyclable(false)
 
     }
 
-    override fun getItemCount(): Int = differ.currentList.size
+
 
     inner class ViewHolder() : RecyclerView.ViewHolder(binding.root) {
 
@@ -74,24 +75,25 @@ class PopularMoviesAdapter @Inject constructor(
 
     }
 
-    private val differCallback = object : DiffUtil.ItemCallback<PopularMovieListResponse.Result>() {
-        override fun areItemsTheSame(
-            oldItem: PopularMovieListResponse.Result,
-            newItem: PopularMovieListResponse.Result
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
 
-        override fun areContentsTheSame(
-            oldItem: PopularMovieListResponse.Result,
-            newItem: PopularMovieListResponse.Result
-        ): Boolean {
-            return oldItem == newItem
-        }
 
+    companion object{
+        private val differCallback = object : DiffUtil.ItemCallback<PopularMovieListResponse.Result>() {
+            override fun areItemsTheSame(
+                oldItem: PopularMovieListResponse.Result,
+                newItem: PopularMovieListResponse.Result
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(
+                oldItem: PopularMovieListResponse.Result,
+                newItem: PopularMovieListResponse.Result
+            ): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
-
-    val differ = AsyncListDiffer(this, differCallback)
-
 
 }
