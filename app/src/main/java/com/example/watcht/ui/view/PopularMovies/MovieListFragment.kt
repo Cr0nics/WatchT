@@ -61,10 +61,12 @@ class MovieListFragment : Fragment() {
         binding.recViewPopularMovies.adapter = moviesAdapter
 
 
-        lifecycleScope.launchWhenCreated {
-            moviesAdapter.loadStateFlow.collect {
-                val state = it.refresh
-                binding.progressBar.isVisible = state is LoadState.Loading
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                moviesAdapter.loadStateFlow.collect {
+                    val state = it.refresh
+                    binding.progressBar.isVisible = state is LoadState.Loading
+                }
             }
         }
         binding.recViewPopularMovies.adapter = moviesAdapter.withLoadStateFooter(
